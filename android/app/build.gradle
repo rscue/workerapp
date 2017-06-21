@@ -80,6 +80,11 @@ apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
+* Add react native config support:
+*/
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
+/**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
  *   - An APK that only works on x86 devices
@@ -106,6 +111,14 @@ android {
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
+        }
+    }
+    signingConfigs {
+        debug {
+            storeFile file('../keystores/debug.keystore')            
+            storePassword "android"
+            keyAlias "worker-debugkey"
+            keyPassword "android"
         }
     }
     splits {
@@ -138,6 +151,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-config')
+    compile project(':react-native-maps')
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"

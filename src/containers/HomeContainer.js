@@ -20,7 +20,7 @@ class HomeContainer extends Component {
                             <H2>Juan Perez</H2>
                         </Body>
                     </ListItem>
-                    <ListItem last style={{ height: 355 }}>
+                    <ListItem last style={{ height: 300 }}>
                         <Body style={{ alignItems: 'center' }}>
                             <Image style={{ resizeMode: 'cover', width: 250, height: 250, borderRadius: 125 }} source={require('../assets/img/nobody.jpg')} />
                         </Body>
