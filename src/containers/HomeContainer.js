@@ -1,11 +1,51 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, TouchableNativeFeedback } from 'react-native';
 import {
     Container, Header, Body, Content, Title, Text, Left, Right, Icon,
-    Switch, ListItem, Grid, Row, Col, Card, CardItem, H2, List, Button, Separator
+    Switch, ListItem, Grid, Row, Col, Card, CardItem, H2, List, Button, Separator,
+    ActionSheet
 } from 'native-base';
 
 class HomeContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            onService: false,
+            boatTow: 'No embarcado',
+        };
+    }
+
+    boatTowSelect = () => {
+        const options = [
+            'Embarcación 1',
+            'Embarcación 2',
+            'Cancelar',
+        ];
+        const cancelButtonIndex = options.length - 1;
+        ActionSheet.show({
+            options,
+            cancelButtonIndex,
+            title: 'Seleccione la embarcación a usar',
+        }, index => {
+            switch (parseInt(index)) {
+                case cancelButtonIndex:
+                    this.setState({ onService: false, boatTow: 'No embarcado' });
+                    break;
+                default:
+                    this.setState({ onService: true, boatTow: options[index] });
+            }
+        });
+
+    }
+
+    switchService = () => {
+        if (this.state.onService) {
+            this.setState({ onService: false });
+        } else {
+            this.boatTowSelect();
+        }
+    }
+
     render() {
         return (
             <Container>
@@ -15,6 +55,7 @@ class HomeContainer extends Component {
                     </Body>
                 </Header>
                 <Content>
+
                     <ListItem last>
                         <Body style={{ alignItems: 'center', marginTop: 20 }}>
                             <H2>Juan Perez</H2>
@@ -33,13 +74,10 @@ class HomeContainer extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Text>Cruise 350</Text>
+                            <Text>{this.state.boatTow}</Text>
                         </Body>
-                        <Right>
-                            <Icon name="arrow-forward" />
-                        </Right>
                     </ListItem>
-                    <ListItem icon last>
+                    <ListItem icon last onPress={() => this.boatTowSelect()}>
                         <Left>
                             <Button style={{ backgroundColor: '#FD3C2D' }} >
                                 <Icon name="help-buoy" />
@@ -49,7 +87,7 @@ class HomeContainer extends Component {
                             <Text>En servicio</Text>
                         </Body>
                         <Right>
-                            <Switch />
+                            <Switch value={this.state.onService} onValueChange={() => this.switchService()} />
                         </Right>
                     </ListItem>
                 </Content >
