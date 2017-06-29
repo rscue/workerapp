@@ -44,17 +44,13 @@ class LocationContainer extends Component {
                     workerLocationTitle: `Lat: ${this.state.workerLocation.latitude} Lng: ${this.state.workerLocation.longitude}`
                 });
             },
-            (error) => {
-                if (error.code === error.TIMEOUT) {
-                    Toast.show({
-                        buttonText: 'Cerrar',
-                        position: 'bottom',
-                        type: 'warning',
-                        text: 'Hubo un error al detectar su ubicación, asegurese que tenga el GPS activado'
-                    });
-                } else {
-                    alert(error.message);
-                }
+            () => {
+                Toast.show({
+                    buttonText: 'Cerrar',
+                    position: 'bottom',
+                    type: 'warning',
+                    text: 'Hubo un error al detectar su ubicación, asegurese que tenga el GPS activado'
+                });
             },
             { enableHighAccuracy: true, timeout: 1000, maximumAge: 10000 }
         );
@@ -80,17 +76,13 @@ class LocationContainer extends Component {
                 });
                 this.map.animateToRegion(region);
             },
-            (error) => {
-                if (error.code === error.TIMEOUT) {
-                    Toast.show({
-                        buttonText: 'Cerrar',
-                        position: 'bottom',
-                        type: 'warning',
-                        text: 'Hubo un error al detectar su ubicación, asegurese que tenga el GPS activado'
-                    });
-                } else {
-                    alert(error.message);
-                }
+            () => {
+                Toast.show({
+                    buttonText: 'Cerrar',
+                    position: 'bottom',
+                    type: 'warning',
+                    text: 'Hubo un error al detectar su ubicación, asegurese que tenga el GPS activado'
+                });
             });
     }
 

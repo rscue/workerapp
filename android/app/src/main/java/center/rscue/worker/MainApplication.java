@@ -3,6 +3,9 @@ package center.rscue.worker;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.azure.mobile.react.crashes.RNCrashesPackage;
+import com.microsoft.azure.mobile.react.analytics.RNAnalyticsPackage;
+import com.microsoft.azure.mobile.react.mobilecenter.RNMobileCenterPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -26,6 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNCrashesPackage(MainApplication.this, getResources().getString(R.string.mobileCenterCrashes_whenToSendCrashes)),
+            new RNAnalyticsPackage(MainApplication.this, getResources().getString(R.string.mobileCenterAnalytics_whenToEnableAnalytics)),
+            new RNMobileCenterPackage(MainApplication.this),
             new MapsPackage(),
             new ReactNativeConfigPackage(),
             new VectorIconsPackage()
