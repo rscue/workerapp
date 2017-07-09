@@ -66,7 +66,7 @@ class LoginContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if (this.props.error !== nextProps.error) {
+        if (this.props.error !== nextProps.error && nextProps.error) {
             Alert.alert('Error', 'Correo electrónico o contraseña no validos');
         }
     }
@@ -123,8 +123,8 @@ class LoginContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    loginIn: state.auth.fetching,
-    error: state.auth.error,
+    loginIn: state.auth.fetching || state.profile.fetching,
+    error: state.auth.error || state.profile.error,
 })
 
 const mapDispatchToProps = (dispatch) => ({

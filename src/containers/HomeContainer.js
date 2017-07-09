@@ -5,6 +5,7 @@ import {
     Switch, ListItem, Grid, Row, Col, Card, CardItem, H2, List, Button, Separator,
     ActionSheet
 } from 'native-base';
+import { connect } from 'react-redux';
 
 class HomeContainer extends Component {
     constructor(props) {
@@ -58,7 +59,7 @@ class HomeContainer extends Component {
 
                     <ListItem last>
                         <Body style={{ alignItems: 'center', marginTop: 20 }}>
-                            <H2>Juan Perez</H2>
+                            <H2>{this.props.name} {this.props.lastName}</H2>
                         </Body>
                     </ListItem>
                     <ListItem last style={{ height: 300 }}>
@@ -96,4 +97,9 @@ class HomeContainer extends Component {
     }
 }
 
-export default HomeContainer;
+const mapStateToProps = (state) => ({
+    name: state.profile.name,
+    lastName: state.profile.lastName,
+});
+
+export default connect(mapStateToProps)(HomeContainer);

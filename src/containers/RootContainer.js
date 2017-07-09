@@ -23,7 +23,7 @@ class RootContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    loggedIn: state.auth.accessToken !== null,
+    loggedIn: state.auth.accessToken && state.profile.lastName,
 });
 
 const mapDispatchToProps = (dispatch) => ({
