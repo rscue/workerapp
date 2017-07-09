@@ -4,13 +4,8 @@ import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
 import Navigator from '../navigation';
-import StartupActions from '../redux/StartupRedux';
 
 class RootContainer extends Component {
-    componentDidMount() {
-        this.props.startup();
-    }
-
     render() {
         const Router = Navigator(this.props.loggedIn);
         return (
@@ -26,8 +21,4 @@ const mapStateToProps = (state) => ({
     loggedIn: state.auth.accessToken && state.profile.lastName,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    startup: () => dispatch(StartupActions.startup()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
+export default connect(mapStateToProps)(RootContainer);
