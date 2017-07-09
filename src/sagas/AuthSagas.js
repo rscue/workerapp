@@ -24,26 +24,28 @@ export function* loginRequest({ email, password }) {
         });
         const providerId = userInfo['https://api.rscue.center/provider_id'];
         const workerId = userInfo['https://api.rscue.center/worker_id'];
+        const expiresOn = new Date(Date.now() + (authResult.expiresIn * 1000));        
         ApiService.setAuthToken(authResult.accessToken);
-        yield put(AuthActions.loginSuccess(authResult.accessToken, authResult.expiresIn, authResult.refreshToken));
-        yield put(AuthActions.updateToken(authResult.accessToken, authResult.expiresIn));
+        yield put(AuthActions.loginSuccess(authResult.accessToken, expiresOn, authResult.refreshToken));
+        yield put(AuthActions.updateToken(authResult.accessToken, expiresOn));
         yield put(ProfileActions.profileRequest(providerId, workerId));
     } catch (error) {
         yield put(AuthActions.loginFailure());
     }
 }
 
-export function* refreshToken({ expiresIn, refreshToken }) {
+export function* refreshToken({ expiresOn, refreshToken }) {
     try {
-        let expireInMs = expireIn * 1000;
+        let expireInMs = Date.now() - expiresOn;
         while (true) {
             yield wait(expireInMs);
             const refreshResult = yield call([auth0.auth, 'refreshToken'], {
                 refreshToken
             });
+            const expiresOn = new Date(Date.now() + (authResult.expiresIn * 1000)); 
             expireInMs = refreshResult.expireIn * 1000;
             ApiService.setAuthToken(authResult.accessToken);
-            yield put(AuthActions.updateToken(refreshResult.accessToken, refreshResult.expiresIn));
+            yield put(AuthActions.updateToken(refreshResult.accessToken, expiresOn));
         }
     }
     catch (error) {
